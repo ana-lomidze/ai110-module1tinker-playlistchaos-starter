@@ -1,3 +1,4 @@
+import random
 from typing import Dict, List, Optional, Tuple
 
 Song = Dict[str, object]
@@ -191,8 +192,8 @@ def lucky_pick(
 
 def random_choice_or_none(songs: List[Song]) -> Optional[Song]:
     """Return a random song or None."""
-    import random
-
+    if not songs:
+        return None
     return random.choice(songs)
 
 
@@ -202,7 +203,6 @@ def history_summary(history: List[Song]) -> Dict[str, int]:
     for song in history:
         mood = song.get("mood", "Mixed")
         if mood not in counts:
-            counts["Mixed"] += 1
-        else:
-            counts[mood] += 1
+            mood = "Mixed"
+        counts[mood] += 1
     return counts
